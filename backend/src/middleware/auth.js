@@ -1,14 +1,12 @@
-import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import { JWT_SECRET } from "../config/env";
-import { Role } from "../types/roles";
+import { JWT_SECRET } from "../config/env.js";
 
-export function authenticate(req: Request, res: Response, next: NextFunction) {
+export function authenticate(req, res, next) {
   const header = req.headers.authorization || "";
   const token = header.startsWith("Bearer ") ? header.slice(7) : undefined;
   if (!token) return res.status(401).json({ message: "Unauthorized" });
   try {
-    const decoded = jwt.verify(token, JWT_SECRET) as { id: string; role: Role };
+    const decoded = jwt.verify(token, JWT_SECRET);
     req.user = { id: decoded.id, role: decoded.role };
     next();
   } catch (err) {
@@ -16,8 +14,8 @@ export function authenticate(req: Request, res: Response, next: NextFunction) {
   }
 }
 
-export function authorize(roles: Role[]) {
-  return (req: Request, res: Response, next: NextFunction) => {
+export function authorize(roles) {
+  return (req, res, next) => {
     if (!req.user) return res.status(401).json({ message: "Unauthorized" });
     if (!roles.includes(req.user.role)) return res.status(403).json({ message: "Forbidden" });
     next();

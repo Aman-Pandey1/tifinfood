@@ -2,15 +2,19 @@ import express from "express";
 import cors from "cors";
 import morgan from "morgan";
 import path from "path";
-import { CORS_ORIGIN, PORT } from "./config/env";
-import { connectToDatabase } from "./config/db";
-import { errorHandler, notFound } from "./middleware/errorHandler";
-import authRoutes from "./routes/authRoutes";
-import adminRoutes from "./routes/adminRoutes";
-import sellerRoutes from "./routes/sellerRoutes";
-import customerRoutes from "./routes/customerRoutes";
-import complaintRoutes from "./routes/complaintRoutes";
-import userRoutes from "./routes/userRoutes";
+import { fileURLToPath } from "url";
+import { CORS_ORIGIN, PORT } from "./config/env.js";
+import { connectToDatabase } from "./config/db.js";
+import { errorHandler, notFound } from "./middleware/errorHandler.js";
+import authRoutes from "./routes/authRoutes.js";
+import adminRoutes from "./routes/adminRoutes.js";
+import sellerRoutes from "./routes/sellerRoutes.js";
+import customerRoutes from "./routes/customerRoutes.js";
+import complaintRoutes from "./routes/complaintRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 async function bootstrap() {
   await connectToDatabase();
@@ -22,7 +26,7 @@ async function bootstrap() {
   app.use(express.urlencoded({ extended: true }));
   app.use(morgan("dev"));
 
-  app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
+  app.use("/uploads", express.static(path.join(__dirname, "../..", "uploads")));
 
   app.get("/health", (_req, res) => res.json({ ok: true }));
 
@@ -37,13 +41,11 @@ async function bootstrap() {
   app.use(errorHandler);
 
   app.listen(PORT, () => {
-    // eslint-disable-next-line no-console
     console.log(`Server listening on http://localhost:${PORT}`);
   });
 }
 
 bootstrap().catch((err) => {
-  // eslint-disable-next-line no-console
   console.error("Failed to start server", err);
   process.exit(1);
 });

@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { authenticate, authorize } from "../middleware/auth";
-import { approveSeller, blockUser, dashboardStats, listPendingSellers, rejectSeller, unblockUser } from "../controllers/adminController";
+import { authenticate, authorize } from "../middleware/auth.js";
+import { approveSeller, blockUser, dashboardStats, listPendingSellers, rejectSeller, unblockUser } from "../controllers/adminController.js";
 
 const router = Router();
 

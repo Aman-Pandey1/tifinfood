@@ -1,8 +1,8 @@
 import { Router } from "express";
 import multer from "multer";
 import path from "path";
-import { authenticate, authorize } from "../middleware/auth";
-import { createFoodItem, deleteFoodItem, listMyOrders, updateFoodItem, updateOrderStatus, upsertSellerProfile } from "../controllers/sellerController";
+import { authenticate, authorize } from "../middleware/auth.js";
+import { createFoodItem, deleteFoodItem, listMyOrders, updateFoodItem, updateOrderStatus, upsertSellerProfile } from "../controllers/sellerController.js";
 
 const router = Router();
 

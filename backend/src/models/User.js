@@ -1,22 +1,6 @@
-import mongoose, { Schema, Document, Model, Types } from "mongoose";
-import { Role } from "../types/roles";
+import mongoose, { Schema } from "mongoose";
 
-export interface IUser extends Document {
-  _id: Types.ObjectId;
-  name: string;
-  email: string;
-  password: string;
-  role: Role;
-  isBlocked: boolean;
-  phone?: string;
-  address?: string;
-  location?: {
-    type: "Point";
-    coordinates: [number, number];
-  };
-}
-
-const UserSchema = new Schema<IUser>(
+const UserSchema = new Schema(
   {
     name: { type: String, required: true, trim: true },
     email: { type: String, required: true, unique: true, lowercase: true },
@@ -35,4 +19,4 @@ const UserSchema = new Schema<IUser>(
 
 UserSchema.index({ location: "2dsphere" });
 
-export const User: Model<IUser> = mongoose.model<IUser>("User", UserSchema);
+export const User = mongoose.model("User", UserSchema);
