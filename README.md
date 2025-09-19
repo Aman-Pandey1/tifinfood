@@ -1,3 +1,54 @@
+## Food Service Application (Admin, Seller, Customer)
+
+Monorepo with backend (Node/Express/MongoDB) and mobile app (Expo React Native, TypeScript).
+
+### Structure
+
+```
+/backend  - Node.js API (TypeScript, Express, MongoDB)
+/app      - Expo React Native app (TypeScript)
+```
+
+### Backend
+
+1. Copy env:
+```bash
+cp backend/.env.example backend/.env
+```
+
+2. Start dev server:
+```bash
+cd backend && npm run dev
+```
+
+APIs:
+- Auth: POST `/api/auth/register`, `/api/auth/login`
+- Admin: GET `/api/admin/pending-sellers`, POST `/api/admin/approve-seller/:id`, `/api/admin/reject-seller/:id`, `/api/admin/block-user/:id`, `/api/admin/unblock-user/:id`, GET `/api/admin/dashboard`
+- Seller: POST `/api/seller/profile`, `POST /api/seller/food-items`, `PUT /api/seller/food-items/:itemId`, `DELETE /api/seller/food-items/:itemId`, `GET /api/seller/orders`, `POST /api/seller/orders/:orderId/status`
+- Customer: GET `/api/customer/nearby-sellers`, `GET /api/customer/seller/:sellerId/menu`, `POST /api/customer/orders`, `GET /api/customer/orders`, `POST /api/customer/reviews`
+- Complaints: POST `/api/complaints` (customer), GET `/api/complaints` and POST `/api/complaints/:id/status` (admin)
+- User: GET `/api/user/me`, POST `/api/user/location`
+
+### Mobile App
+
+1. Set API URL:
+```bash
+cp app/.env.example app/.env
+# Update EXPO_PUBLIC_API_URL if running on device/emulator
+```
+
+2. Start app:
+```bash
+cd app && npm run android # or npm run web
+```
+
+Role-based tabs:
+- Admin: Dashboard, Approvals, Complaints
+- Seller: Menu, Orders, Profile
+- Customer: Discover, Orders, Account
+
+Notes:
+- This scaffold includes basic flows and endpoints; extend for payments, richer menus, and media management in production.
 This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
 # Getting Started
