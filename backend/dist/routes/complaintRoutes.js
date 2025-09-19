@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const auth_1 = require("../middleware/auth");
+const complaintController_1 = require("../controllers/complaintController");
+const router = (0, express_1.Router)();
+router.post("/", auth_1.authenticate, (0, auth_1.authorize)(["CUSTOMER"]), complaintController_1.createComplaint);
+router.get("/", auth_1.authenticate, (0, auth_1.authorize)(["ADMIN"]), complaintController_1.listComplaints);
+router.post("/:complaintId/status", auth_1.authenticate, (0, auth_1.authorize)(["ADMIN"]), complaintController_1.updateComplaintStatus);
+exports.default = router;
