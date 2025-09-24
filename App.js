@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StatusBar } from 'react-native';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { enableScreens } from 'react-native-screens';
 import { useAtom } from 'jotai';
 import Storage from './src/lib/storage';
@@ -37,20 +36,18 @@ export default function App() {
   }, [setToken]);
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <NavigationContainer theme={navTheme}>
-        <StatusBar barStyle="dark-content" />
-        {!token ? (
-          <AuthNavigator />
-        ) : role === 'ADMIN' ? (
-          <AdminTabs />
-        ) : role === 'SELLER' ? (
-          <SellerTabs />
-        ) : (
-          <CustomerTabs />
-        )}
-      </NavigationContainer>
-    </GestureHandlerRootView>
+    <NavigationContainer theme={navTheme}>
+      <StatusBar barStyle="dark-content" />
+      {!token ? (
+        <AuthNavigator />
+      ) : role === 'ADMIN' ? (
+        <AdminTabs />
+      ) : role === 'SELLER' ? (
+        <SellerTabs />
+      ) : (
+        <CustomerTabs />
+      )}
+    </NavigationContainer>
   );
 }
 
