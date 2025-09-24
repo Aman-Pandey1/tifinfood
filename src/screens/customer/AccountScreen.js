@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Button } from 'react-native';
 import { api } from '../../lib/api';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import Storage from '../../lib/storage';
 
 export function AccountScreen() {
   const [me, setMe] = useState(null);
@@ -9,7 +9,7 @@ export function AccountScreen() {
     api.get('/user/me').then((r) => setMe(r.data));
   }, []);
   const logout = async () => {
-    await AsyncStorage.removeItem('token');
+    await Storage.removeItem('token');
     // rudimentary reset for now
     // eslint-disable-next-line no-undef
     if (typeof location !== 'undefined' && location.reload) {

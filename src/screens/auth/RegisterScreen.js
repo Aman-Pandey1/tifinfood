@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, Alert } from 'react-native';
 import { api } from '../../lib/api';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import Storage from '../../lib/storage';
 import { useAtom } from 'jotai';
 import { authTokenAtom, roleAtom, userAtom } from '../../state/auth';
 
@@ -17,7 +17,7 @@ export function RegisterScreen() {
   const onRegister = async () => {
     try {
       const res = await api.post('/auth/register', { name, email, password, role });
-      await AsyncStorage.setItem('token', res.data.token);
+      await Storage.setItem('token', res.data.token);
       setToken(res.data.token);
       setRoleAtom(res.data.user.role);
       setUser({ id: res.data.user.id, name: res.data.user.name, email: res.data.user.email });
