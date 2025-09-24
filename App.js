@@ -4,7 +4,7 @@ import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { enableScreens } from 'react-native-screens';
 import { useAtom } from 'jotai';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import Storage from './src/lib/storage';
 
 import { authTokenAtom, roleAtom } from './src/state/auth';
 import { AuthNavigator } from './src/navigation/AuthNavigator';
@@ -28,7 +28,7 @@ export default function App() {
   useEffect(() => {
     (async () => {
       try {
-        const stored = await AsyncStorage.getItem('token');
+        const stored = await Storage.getItem('token');
         if (stored) setToken(stored);
       } finally {
         setLoading(false);
