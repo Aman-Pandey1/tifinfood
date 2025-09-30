@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StatusBar } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { enableScreens } from 'react-native-screens';
 import { useAtom } from 'jotai';
@@ -11,6 +12,7 @@ import { AdminTabs } from './src/navigation/AdminTabs';
 import { SellerTabs } from './src/navigation/SellerTabs';
 import { CustomerTabs } from './src/navigation/CustomerTabs';
 import { colors } from './src/theme/colors';
+import { SplashScreen } from './src/screens/SplashScreen';
 
 enableScreens(true);
 
@@ -36,18 +38,22 @@ export default function App() {
   }, [setToken]);
 
   return (
-    <NavigationContainer theme={navTheme}>
-      <StatusBar barStyle="dark-content" />
-      {!token ? (
-        <AuthNavigator />
-      ) : role === 'ADMIN' ? (
-        <AdminTabs />
-      ) : role === 'SELLER' ? (
-        <SellerTabs />
-      ) : (
-        <CustomerTabs />
-      )}
-    </NavigationContainer>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <NavigationContainer theme={navTheme}>
+        <StatusBar barStyle="dark-content" />
+        {loading ? (
+          <SplashScreen />
+        ) : !token ? (
+          <AuthNavigator />
+        ) : role === 'ADMIN' ? (
+          <AdminTabs />
+        ) : role === 'SELLER' ? (
+          <SellerTabs />
+        ) : (
+          <CustomerTabs />
+        )}
+      </NavigationContainer>
+    </GestureHandlerRootView>
   );
 }
 
